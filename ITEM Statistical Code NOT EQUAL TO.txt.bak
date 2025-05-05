@@ -1,0 +1,13 @@
+SELECT
+cir.ItemRecordId 
+
+FROM 
+polaris.polaris.CircItemRecords cir
+
+JOIN
+ItemRecordDetails ird on ird.ItemRecordID = cir.ItemRecordID
+
+WHERE 
+cir.RecordStatusID = 1  AND
+cir.CollectionCodeID =  17 AND
+cir.StatisticalCodeID <> 11
