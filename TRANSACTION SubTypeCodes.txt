@@ -1,0 +1,10 @@
+SELECT 
+    TST.TransactionSubTypeID,
+	TST.TransactionSubTypeDescription,
+	TSTC.TransactionSubTypeCode,
+	TSTC.TransactionSubTypeCodeDesc
+
+FROM 
+    PolarisTransactions.Polaris.TransactionSubTypes TST WITH (NOLOCK)
+INNER JOIN 
+	PolarisTransactions.Polaris.TransactionSubTypeCodes TSTC WITH (NOLOCK) ON TSTC.TransactionSubTypeID=TST.TransactionSubTypeID

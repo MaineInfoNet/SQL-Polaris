@@ -1,0 +1,15 @@
+SELECT 
+  p.PatronID
+
+
+FROM 
+  Polaris.Polaris.Patrons p (nolock)
+
+JOIN 
+Polaris.Polaris.PatronRegistration pr (nolock) ON p.PatronID = pr.PatronID
+
+WHERE pr.ExpirationDate BETWEEN '01-01-2000' AND '01-02-2018' 
+  AND p.ChargesAmount = 0
+  AND p.SystemBlocks != 0
+
+ORDER BY pr.PatronFullName;
