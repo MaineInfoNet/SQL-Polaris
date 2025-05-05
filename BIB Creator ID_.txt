@@ -1,0 +1,16 @@
+\* --determine who created a bib record */
+\* --pulls in a list of all bibs created with the indicated user IDs */ 
+
+SELECT
+br.BibliographicRecordId
+
+FROM
+BibliographicRecords br WITH (NOLOCK)
+
+WHERE
+	br.CreatorID IN ()	--insert user ID separated by a comma in between the parentheses
+AND
+	br.CreationDate BETWEEN 'yyyy-mm-dd 00:00:00.000' AND 'yyyy-mm-dd 23:59:59.999' 
+	-- replace beginning and ending dates to the desired range. 
+	--for a day use the current times as they are. 
+	--for a specific time update as needed.
