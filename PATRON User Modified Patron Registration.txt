@@ -30,7 +30,7 @@ INNER JOIN -- Get the workstation
     Polaris.Polaris.Workstations w WITH (NOLOCK)
     ON (w.WorkstationID = th.WorkstationID)
 WHERE -- Pop in your PatronID here
-    patron.numValue = 2985799
+    patron.numValue = 
 AND -- Patron registration modified
     th.TransactionTypeID = 2003
 AND -- Adjust dates as desired
