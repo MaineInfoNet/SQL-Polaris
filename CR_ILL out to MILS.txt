@@ -1,0 +1,35 @@
+SELECT
+	CIR.ItemRecordID AS ItemRecordID,
+	ITS.Name AS ItemStatus,
+	BR.BrowseTitle AS Title,
+	BR.BrowseAuthor AS Author,
+	IRD.CallNumber AS CallNumber,
+	CIR.Barcode AS Barcode,
+	AB.Name AS AssignedBranch,
+	HB.Name AS HomeBranch,
+	CIR.LastDueDate AS DueDate,
+	CIR.ILLFlag
+	
+
+FROM
+    Polaris.Polaris.CircItemRecords CIR (NOLOCK) 
+	
+JOIN
+	Polaris.BibliographicRecords BR (NOLOCK) ON CIR.AssociatedBibRecordID = BR.BibliographicRecordID
+	
+JOIN
+	Polaris.ItemRecordDetails IRD (NOLOCK) ON CIR.ItemRecordID = IRD.ItemRecordID
+
+JOIN
+	Polaris.Organizations AB (NOLOCK) ON CIR.AssignedBranchID = AB.OrganizationID
+
+JOIN
+	Polaris.Organizations HB (NOLOCK) ON CIR.HomeBranchID = HB.OrganizationID
+
+JOIN
+	Polaris.ItemStatuses ITS (NOLOCK) ON CIR.ItemStatusID = ITS.ItemStatusID
+
+WHERE -- 
+    CIR.AssignedBranchID = 36 AND
+	CIR.HomeBranchID = 24 AND
+	CIR.ILLFlag = 1 
