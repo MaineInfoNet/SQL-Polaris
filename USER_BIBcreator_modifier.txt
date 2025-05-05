@@ -21,5 +21,5 @@ LEFT JOIN PolarisUsers pum WITH (NOLOCK)
 LEFT JOIN PolarisUsers puc WITH (NOLOCK)
   ON puc.CreatorID = b.CreatorID
 	
-WHERE
-b.BibliographicRecordID = '502329'
+WHERE ---enter controlID here
+b.BibliographicRecordID = ''
