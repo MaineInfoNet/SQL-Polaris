@@ -1,0 +1,42 @@
+DECLARE @StartDate DATETIME='2026-01-14 00:00:00.000';
+DECLARE @EndDate   DATETIME='2026-02-21 23:59:59.999';
+DECLARE @RecordSetID INT=6332;
+
+;WITH rs_items AS(
+  SELECT ItemRecordID
+  FROM Polaris.ItemRecordSets
+  WHERE RecordSetID=@RecordSetID
+)
+
+SELECT
+  I.ItemRecordID,
+  I.Barcode,
+  B.BrowseTitle,
+  B.BrowseAuthor,
+  COUNT(DISTINCT TH.TransactionID) AS TransactionCount
+FROM rs_items R
+
+INNER JOIN Polaris.CircItemRecords I WITH(NOLOCK)
+  ON I.ItemRecordID=R.ItemRecordID
+
+INNER JOIN Polaris.BibliographicRecords B WITH(NOLOCK)
+  ON B.BibliographicRecordID=I.AssociatedBibRecordID
+
+LEFT JOIN PolarisTransactions.Polaris.TransactionDetails IR WITH(NOLOCK)
+  ON IR.TransactionSubTypeID=38
+  AND IR.NumValue=I.ItemRecordID
+
+LEFT JOIN PolarisTransactions.Polaris.TransactionHeaders TH WITH(NOLOCK)
+  ON TH.TransactionID=IR.TransactionID
+  AND TH.TransactionTypeID=6001
+  AND TH.TranClientDate BETWEEN @StartDate AND @EndDate
+
+GROUP BY
+  I.ItemRecordID,
+  I.Barcode,
+  B.BrowseTitle,
+  B.BrowseAuthor
+
+ORDER BY
+  B.BrowseAuthor,
+  B.BrowseTitle;
