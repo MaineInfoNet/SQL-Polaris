@@ -1,0 +1,60 @@
+SELECT
+  cir.AssociatedBibRecordID,
+  MAX(CASE WHEN bt020.TagNumber = '020' AND bs020.Subfield = 'a' THEN bs020.Data END) AS ISBN,
+  MAX(CASE WHEN bt245.TagNumber = '245' AND bs245.Subfield = 'a' THEN bs245.Data END) AS Title,
+  MAX(CASE WHEN bt245.TagNumber = '245' AND bs245.Subfield = 'b' THEN bs245.Data END) AS Subtitle, 
+  MAX(CASE WHEN bt100.TagNumber = '100' AND bs100.Subfield = 'a' THEN bs100.Data END) AS Author,
+  MAX(CASE WHEN bt250.TagNumber = '250' AND bs250.Subfield = 'a' THEN bs250.Data END) AS Edition,
+  ird.CallNumber AS ItemCallNumber,
+  MAX(CASE 
+    WHEN bt260.TagNumber = '260' AND bs260.Subfield = 'c' THEN bs260.Data
+    WHEN bt264.TagNumber = '264' AND bs264.Subfield = 'c' THEN bs264.Data
+  END) AS PubYear,
+  MAX(CASE 
+    WHEN bt260.TagNumber = '260' AND bs260.Subfield = 'b' THEN bs260.Data
+    WHEN bt264.TagNumber = '264' AND bs264.Subfield = 'b' THEN bs264.Data
+  END) AS Publisher
+
+FROM circItemRecords cir (NOLOCK)
+
+JOIN ItemRecordDetails ird (NOLOCK)
+  ON cir.ItemRecordID = ird.ItemRecordID
+
+JOIN BibliographicRecords br (NOLOCK)
+  ON cir.AssociatedBibRecordID = br.BibliographicRecordID
+
+LEFT JOIN BibliographicTags bt020 (NOLOCK)
+  ON br.BibliographicRecordID = bt020.BibliographicRecordID AND bt020.TagNumber = '020'
+LEFT JOIN BibliographicSubfields bs020 (NOLOCK)
+  ON bt020.BibliographicTagID = bs020.BibliographicTagID
+
+LEFT JOIN BibliographicTags bt245 (NOLOCK)
+  ON br.BibliographicRecordID = bt245.BibliographicRecordID AND bt245.TagNumber = '245'
+LEFT JOIN BibliographicSubfields bs245 (NOLOCK)
+  ON bt245.BibliographicTagID = bs245.BibliographicTagID
+  
+LEFT JOIN BibliographicTags bt250 (NOLOCK)
+  ON br.BibliographicRecordID = bt250.BibliographicRecordID AND bt250.TagNumber = '250'
+LEFT JOIN BibliographicSubfields bs250 (NOLOCK)
+  ON bt250.BibliographicTagID = bs250.BibliographicTagID
+
+LEFT JOIN BibliographicTags bt100 (NOLOCK)
+  ON br.BibliographicRecordID = bt100.BibliographicRecordID AND bt100.TagNumber = '100'
+LEFT JOIN BibliographicSubfields bs100 (NOLOCK)
+  ON bt100.BibliographicTagID = bs100.BibliographicTagID
+
+LEFT JOIN BibliographicTags bt260 (NOLOCK)
+  ON br.BibliographicRecordID = bt260.BibliographicRecordID AND bt260.TagNumber = '260'
+LEFT JOIN BibliographicSubfields bs260 (NOLOCK)
+  ON bt260.BibliographicTagID = bs260.BibliographicTagID
+
+LEFT JOIN BibliographicTags bt264 (NOLOCK)
+  ON br.BibliographicRecordID = bt264.BibliographicRecordID AND bt264.TagNumber = '264'
+LEFT JOIN BibliographicSubfields bs264 (NOLOCK)
+  ON bt264.BibliographicTagID = bs264.BibliographicTagID
+
+WHERE cir.HomeBranchID = 5
+
+GROUP BY
+    cir.AssociatedBibRecordID,
+    ird.CallNumber;
