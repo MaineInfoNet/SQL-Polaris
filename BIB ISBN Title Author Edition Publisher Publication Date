@@ -54,6 +54,7 @@ LEFT JOIN BibliographicSubfields bs264 (NOLOCK)
   ON bt264.BibliographicTagID = bs264.BibliographicTagID
 
 WHERE cir.HomeBranchID = 5
+  AND cir.AssignedCollectionID <> 13
 
 GROUP BY
     cir.AssociatedBibRecordID,
