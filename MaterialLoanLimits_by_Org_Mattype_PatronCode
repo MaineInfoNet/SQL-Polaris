@@ -1,0 +1,16 @@
+SELECT o.name, pc.description, mt.description, mll.MaxItems, mll.MaxRequestItems
+
+FROM MaterialLoanLimits mll WITH (NOLOCK)
+
+INNER JOIN PatronCodes pc WITH (NOLOCK)
+  ON mll.PatronCodeID = pc.PatronCodeID
+
+INNER JOIN MaterialTypes mt WITH (NOLOCK)
+  ON mll.MaterialTypeID = mt.MaterialTypeID
+
+INNER JOIN Organizations o WITH (NOLOCK)
+  ON mll.OrganizationID = o.
+
+WHERE mll.OrganizationID = [enter organizationid]
+  AND mll.MaterialTypeID = [enter materialtypeid] 
+  AND mll.PatronCodeID IN ([enter patron codes])
