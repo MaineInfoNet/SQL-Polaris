@@ -1,0 +1,16 @@
+SELECT 
+*
+
+FROM
+PatronRegistration pr
+
+JOIN 
+    PatronRecordSets prs 
+    ON pr.PatronID = prs.PatronID
+
+WHERE
+    prs.RecordSetID = 4654
+
+ORDER BY
+pr.NameLast,
+pr.NameFirst

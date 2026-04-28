@@ -1,6 +1,0 @@
-SELECT 
-    TST.TransactionSubTypeID,
-	TST.TransactionSubTypeDescription
-
-FROM 
-    PolarisTransactions.Polaris.TransactionSubTypes TST WITH (NOLOCK)

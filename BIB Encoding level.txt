@@ -1,9 +1,0 @@
-SELECT
-BibliographicRecordId
-
-FROM
-BibliographicRecords
-
-WHERE
-
-MARCBibEncodingLevel = 'z'

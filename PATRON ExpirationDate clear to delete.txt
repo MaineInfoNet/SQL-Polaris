@@ -1,8 +1,0 @@
-SELECT
-PatronId
-
-FROM
-PatronRegistration
-
-WHERE
-ExpirationDate <= '2018-05-31' 

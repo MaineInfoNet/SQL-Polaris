@@ -1,0 +1,6 @@
+SELECT 
+PatronCodeID, 
+Description 
+
+FROM 
+Polaris.PatronCodes WITH(NOLOCK)

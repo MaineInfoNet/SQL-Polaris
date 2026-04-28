@@ -1,7 +1,0 @@
-SELECT 
-    TT.TransactionTypeID,
-	TT.TransactionTypeDescription,
-	TT.Mnemonic
-
-FROM 
-    PolarisTransactions.Polaris.TransactionTypes TT WITH (NOLOCK)
